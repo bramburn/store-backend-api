@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": [
+      "ES2018",
+      "DOM"
+    ],
+    "module": "commonjs",
+    "allowJs": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Ensure that casing is correct in imports. */
+    "strict": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "spec",
+    "oldsrc"
+  ]
+}
