@@ -1,10 +1,7 @@
-import {User} from "./Users";
-import bcrypt from
-
-bcrypt
+import {User} from "./User"
 
 export class UserFactory {
-    protected saltRounds = 10;
+    protected saltRounds = 10
 
     private async hashPassword(password: string) {
         return await bcrypt.hash(password, this.saltRounds)
@@ -24,6 +21,8 @@ export class UserFactory {
         const user = new User(
             username, email, <string>pass
         )
+
+        return user
 
     }
 
