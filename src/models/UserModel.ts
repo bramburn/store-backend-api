@@ -32,14 +32,14 @@ export class UserModel {
     }
 
     //todo add middleware
-    async create(b: User, password: string): Promise<IUser> {
+    async create(b: User, passwordHash: string): Promise<IUser> {
         try {
             const sql = 'INSERT INTO users (firstName, LastName,email,passwordHash) VALUES($1, $2, $3,$4) RETURNING *'
             const conn = await Client.connect()
             //todo add passwordHash and salt
 
             const result = await conn
-                .query(sql, [b.firstName, b.lastName, b.email, password])
+                .query(sql, [b.firstName, b.lastName, b.email, passwordHash])
 
             const item = result.rows[0]
 
