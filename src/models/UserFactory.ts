@@ -1,5 +1,5 @@
 import {User} from "./User"
-
+import bcrypt from 'bcrypt'
 export class UserFactory {
     protected saltRounds = 10
 
