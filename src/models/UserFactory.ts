@@ -1,5 +1,7 @@
 import {User} from "./User"
 import bcrypt from 'bcrypt'
+import {UserModel} from "./UserModel"
+
 export class UserFactory {
     protected saltRounds = 10
 
@@ -7,7 +9,7 @@ export class UserFactory {
         return await bcrypt.hash(password, this.saltRounds)
     }
 
-    async createUser(username: string, email: string, password: string) {
+    async createUser(firstName: string, lastName: string, email: string, password: string) {
 
 
         let pass: null | string = null
@@ -17,12 +19,11 @@ export class UserFactory {
         } catch {
             throw Error("Unable to produce password hash")
         }
+        const u = new UserModel()
+        return u.create(new User(
+            firstName, lastName, email
+        ), <string>pass)
 
-        const user = new User(
-            username, email, <string>pass
-        )
-
-        return user
 
     }
 

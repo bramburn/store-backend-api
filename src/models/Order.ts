@@ -1,6 +1,6 @@
 import {IProduct, Product} from "./Product"
-import Client from "../database"
-import {IUser} from "./User"
+import client from "../database"
+import {IUser, User} from "./User"
 
 export interface orderItem {
     qty: number
@@ -20,12 +20,28 @@ export interface IOrder {
 
 }
 
+export class Order implements IOrder {
+    public status: OrderStatus
+
+    public user_id: IUser
+
+    public items: orderItem[]
+
+    constructor(items: orderItem[], user_id: IUser, status: OrderStatus) {
+        this.items = items
+        this.user_id = user_id
+        this.status = status
+    }
+
+    public id=0
+}
+
 
 export class OrderModel {
 
     async index(): Promise<IOrder[]> {
         try {
-            const conn = await Client.connect()
+            const conn = await client.connect()
             const sql = `SELECT * FROM orders`
 
             const result = await conn.query(sql)
@@ -40,7 +56,7 @@ export class OrderModel {
     async show(id: number): Promise<IProduct> {
         try {
             const sql = 'SELECT * FROM orders WHERE id=($1)'
-            const conn = await Client.connect()
+            const conn = await client.connect()
 
             const result = await conn.query(sql, [id])
 
@@ -53,15 +69,19 @@ export class OrderModel {
     }
 
     //todo add middleware
-    async create(b: Product): Promise<IProduct> {
+    async create(b: Product, userId:User,items:orderItem[]): Promise<IProduct> {
         try {
-            const sql = 'INSERT INTO orders (name, price) VALUES($1, $2) RETURNING *'
-            const conn = await Client.connect()
+            const sql = 'INSERT INTO orders (userId, price) VALUES($1, $2) RETURNING *'
+            const conn = await client.connect()
 
             const result = await conn
-                .query(sql, [b.name, b.price])
+                .query(sql, [userId.id, b.price])
 
             const orders = result.rows[0]
+            for(let i = 0;i<items.length;i++){
+                await conn.query('INSERT INTO order_product (qty,orderid,productid,status) VALUES($1,$2,$3,$4)',items[i].qty,orders.id)
+            }
+
 
             conn.release()
 
@@ -74,7 +94,7 @@ export class OrderModel {
     async delete(id: number): Promise<IProduct> {
         try {
             const sql = 'DELETE FROM orders WHERE id=($1)'
-            const conn = await Client.connect()
+            const conn = await client.connect()
 
             const result = await conn.query(sql, [id])
 

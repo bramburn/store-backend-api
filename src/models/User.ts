@@ -17,6 +17,7 @@ export class User implements IUser {
         return this.firstName + ' ' + this.lastName
     }
 
+    //password not needed to create user model
     constructor(firstName: string, lastName: string, email: string) {
         this.firstName = firstName
         this.lastName = lastName
