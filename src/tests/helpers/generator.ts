@@ -6,7 +6,6 @@ import {ProductModel} from "../../models/ProductModel"
 
 
 export const generateUser = (): User => {
-
     return new User(faker.name.firstName(), faker.name.lastName(), faker.internet.email())
 }
 

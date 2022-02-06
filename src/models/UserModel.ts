@@ -4,7 +4,7 @@ import client from "../database"
 export class UserModel {
     async index(): Promise<IUser[]> {
         try {
-            const conn = await Client.connect()
+            const conn = await client.connect()
             const sql = `SELECT * FROM users`
 
             const result = await conn.query(sql)
@@ -19,7 +19,7 @@ export class UserModel {
     async show(id: number): Promise<IUser> {
         try {
             const sql = 'SELECT * FROM users WHERE id=($1)'
-            const conn = await Client.connect()
+            const conn = await client.connect()
 
             const result = await conn.query(sql, [id])
 
@@ -32,7 +32,7 @@ export class UserModel {
     }
 
     //todo add middleware
-    async create(userClass: User, passwordHash: string): Promise<IUser> {
+    async create(userClass: User, passwordHash: string): Promise<User> {
         try {
             const sql = 'INSERT INTO users (firstName, LastName,email,passwordHash) VALUES($1, $2, $3,$4) RETURNING *'
             const conn = await client.connect()
@@ -54,7 +54,7 @@ export class UserModel {
     async delete(id: number): Promise<IUser> {
         try {
             const sql = 'DELETE FROM users WHERE id=($1)'
-            const conn = await Client.connect()
+            const conn = await client.connect()
 
             const result = await conn.query(sql, [id])
 

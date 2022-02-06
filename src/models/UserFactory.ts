@@ -5,7 +5,7 @@ import {UserModel} from "./UserModel"
 export class UserFactory {
     protected saltRounds = 10
 
-    private async hashPassword(password: string) {
+    async hashPassword(password: string): Promise<string> {
         return await bcrypt.hash(password, this.saltRounds)
     }
 

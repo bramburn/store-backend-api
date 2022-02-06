@@ -24,6 +24,16 @@ export class User implements IUser {
         this.email = email
     }
 
+    toObject():object {
+        return {
+            id: this.id,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            fullName: this.showFullName(),
+            email: this.email
+        }
+    }
+
 
 }
 

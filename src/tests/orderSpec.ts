@@ -1,6 +1,7 @@
-import {IOrder, orderItem, OrderModel} from "../models/Order"
-import {generateOrder, generateProduct} from "./helpers/generator"
+import {IOrder, orderItem} from "../models/Order"
+import {generateOrder, generateProduct, generateUser} from "./helpers/generator"
 import {ProductModel} from "../models/ProductModel"
+import {OrderModel} from "../models/OrderModel"
 
 
 const order = new OrderModel()
@@ -22,6 +23,15 @@ describe("Order Model Test - ", () => {
         expect(order.create).toBeDefined()
     })
 
+
+})
+
+describe("Testing the creation of Orders",()=>{
+
+    beforeAll(()=>{
+        const user = generateUser()
+        }
+    )
     it('should create a model order', async function () {
 
 
