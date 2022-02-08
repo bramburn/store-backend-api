@@ -6,20 +6,26 @@ export class ProductModel {
     async index(): Promise<IProduct[]> {
         try {
             const conn = await Client.connect()
-            const sql = `SELECT * FROM products`
+            const sql = `SELECT *
+                         FROM products`
 
             const result = await conn.query(sql)
             conn.release()
-            return result.rows
+            return result.rows.map(it => {
+                const p = new Product(it.name, it.price)
+                p.id = it.id
+                return p
+            })
 
         } catch (err) {
             throw new Error("Error getting products")
         }
     }
 
+    //todo add patch/put for the product
     async show(id: number): Promise<IProduct> {
         try {
-            const sql = 'SELECT * FROM product WHERE id=($1)'
+            const sql = 'SELECT * FROM products WHERE id=($1) LIMIT 1'
             const conn = await Client.connect()
 
             const result = await conn.query(sql, [id])
@@ -32,10 +38,10 @@ export class ProductModel {
         }
     }
 
-    //todo add middleware
+    //todo: add middleware
     async create(b: Product): Promise<IProduct> {
         try {
-            const sql = 'INSERT INTO product (name, price) VALUES($1, $2) RETURNING *'
+            const sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *'
             const conn = await Client.connect()
 
             const result = await conn
@@ -44,16 +50,17 @@ export class ProductModel {
             const product = result.rows[0]
 
             conn.release()
-
-            return product
+            b.id = product.id
+            return b
         } catch (err) {
             throw new Error(`Could not add new product ${b.name}. Error: ${err}`)
         }
     }
 
+    // todo: add middleware
     async delete(id: number): Promise<IProduct> {
         try {
-            const sql = 'DELETE FROM product WHERE id=($1)'
+            const sql = 'DELETE FROM products WHERE id=($1)'
             const conn = await Client.connect()
 
             const result = await conn.query(sql, [id])

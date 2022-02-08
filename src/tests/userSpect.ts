@@ -1,10 +1,7 @@
 import {UserModel} from "../models/UserModel"
 import {generateUser} from "./helpers/generator"
 import {UserFactory} from "../models/UserFactory"
-import exp from "constants"
 import {User} from "../models/User"
-import {isNumber} from "util"
-import {OrderModel} from "../models/OrderModel"
 
 const userModel = new UserModel()
 
@@ -48,6 +45,9 @@ describe("Testing the actual model for users", () => {
 
     })
 
+    /*
+    * Delete user on completing all the test
+    * */
     afterAll(async () => {
         await userModel.delete(generatedUser?.id as number)
     })

@@ -23,7 +23,7 @@ export class Product implements IProduct {
         this._id = value
     }
 
-    ShowPrice():string {
+    ShowPrice(): string {
         return new Intl.NumberFormat(`en-GB`, {
             currency: `GBP`,
             style: 'currency',
@@ -34,13 +34,14 @@ export class Product implements IProduct {
 
     public name: string
 
-    private _price: number
+    private _price!: number
 
     constructor(name: string, price: number) {
-        this._price = price
+        this.price = price
         this.name = name
-
     }
+
+
 }
 
 
