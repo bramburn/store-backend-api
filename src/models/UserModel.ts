@@ -1,5 +1,5 @@
-import {IUser, User} from "./User"
-import client from "../database"
+import { IUser, User } from './User'
+import client from '../database'
 
 export class UserModel {
     async index(): Promise<IUser[]> {
@@ -10,9 +10,8 @@ export class UserModel {
             const result = await conn.query(sql)
             conn.release()
             return result.rows
-
         } catch (err) {
-            throw new Error("Error getting users")
+            throw new Error('Error getting users')
         }
     }
 
@@ -34,12 +33,17 @@ export class UserModel {
     //todo add middleware
     async create(userClass: User, passwordHash: string): Promise<User> {
         try {
-            const sql = 'INSERT INTO users (firstName, LastName,email,passwordHash) VALUES($1, $2, $3,$4) RETURNING *'
+            const sql =
+                'INSERT INTO users (firstName, LastName,email,passwordHash) VALUES($1, $2, $3,$4) RETURNING *'
             const conn = await client.connect()
             //todo add passwordHash and salt
 
-            const result = await conn
-                .query(sql, [userClass.firstName, userClass.lastName, userClass.email, passwordHash])
+            const result = await conn.query(sql, [
+                userClass.firstName,
+                userClass.lastName,
+                userClass.email,
+                passwordHash,
+            ])
 
             const item = result.rows[0]
 
@@ -47,7 +51,9 @@ export class UserModel {
             userClass.id = item.id
             return userClass
         } catch (err) {
-            throw new Error(`Could not add new User ${userClass.showFullName()}. Error: ${err}`)
+            throw new Error(
+                `Could not add new User ${userClass.showFullName()}. Error: ${err}`
+            )
         }
     }
 

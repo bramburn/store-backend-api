@@ -1,5 +1,5 @@
-import {IProduct} from "./Product"
-import {IUser} from "./User"
+import {IProduct} from './Product'
+import {IUser} from './User'
 
 export interface orderItem {
     qty: number
@@ -8,31 +8,36 @@ export interface orderItem {
 
 export enum OrderStatus {
     ACTIVE,
-    COMPLETE
+    COMPLETE,
 }
 
 export interface IOrder {
     id: number
-    items: orderItem[]
-    user_id: IUser
+    orders: orderItem[] | null
+    user: IUser | null
     status: OrderStatus
-
 }
 
 export class Order implements IOrder {
     public status: OrderStatus
 
-    public user_id: IUser
-
-    public items: orderItem[]
-
-    constructor(items: orderItem[], user_id: IUser, status: OrderStatus) {
-        this.items = items
-        this.user_id = user_id
-        this.status = status
+    public getStatus(): string {
+        return (this.status) ? "ACTIVE" : "COMPLETE"
     }
 
-    public id=0
+    public user: IUser | null
+
+    public orders: orderItem[] | null
+
+    constructor(id: number,
+                status: OrderStatus = OrderStatus.ACTIVE,
+                user: IUser | null = null,
+                orders:orderItem[] | null = null) {
+        this.orders = orders
+        this.user = user
+        this.status = status
+        this.id = id
+    }
+
+    public id = 0
 }
-
-

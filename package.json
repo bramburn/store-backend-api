@@ -12,7 +12,9 @@
     "dev": "nodemon ./src/index.ts --trace-warnings",
     "serve": "npm run build && nodemon ./dist/index.js",
     "build": "npm run prettier && npm run clean && tsc -p . && npm run copy-files",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "up": "db-migrate up -e test",
+    "down": "db-migrate down -e test"
   },
   "keywords": [],
   "author": "Bhavesh Ramburn (nitrogen@gmail.com)",

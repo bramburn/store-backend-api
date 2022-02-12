@@ -40,8 +40,4 @@ export class Product implements IProduct {
         this.price = price
         this.name = name
     }
-
-
 }
-
-
