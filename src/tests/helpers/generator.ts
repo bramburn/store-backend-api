@@ -12,6 +12,13 @@ export const generateUser = (): User => {
     )
 }
 
+export const generateOrderItem = (product: Product) => {
+    return {
+        qty: faker.datatype.number(10),
+        product,
+    } as orderItem
+}
+
 export const generateProduct = (): Product => {
     return new Product(
         faker.name.firstName(),
