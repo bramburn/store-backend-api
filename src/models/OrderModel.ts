@@ -1,7 +1,8 @@
 import client from '../database'
-import { User } from './User'
-import { IOrder, Order, orderItem, OrderStatus } from './Order'
-import { Product } from './Product'
+import {User} from './User'
+import {IOrder, Order, orderItem, OrderStatus} from './Order'
+import {Product} from './Product'
+import {QueryResult} from "pg"
 
 export class OrderModel {
     async index(): Promise<IOrder[]> {
@@ -16,6 +17,20 @@ export class OrderModel {
             return result.rows
         } catch (err) {
             throw new Error('Error getting orders')
+        }
+    }
+
+    async patch(id: number, status: OrderStatus): Promise<QueryResult<any>> {
+        try {
+            const sql = 'UPDATE orders SET status=($1) WHERE id=($2)'
+            const conn = await client.connect()
+
+            // TODO: return a better output
+            return await conn.query(sql, [(status == OrderStatus.COMPLETE) ? 'COMPLETE' : 'ACTIVE', id
+            ])
+
+        } catch (e) {
+            throw new Error(`There was an error updating order ${id}`)
         }
     }
 
