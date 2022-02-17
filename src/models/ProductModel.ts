@@ -1,8 +1,7 @@
-import Client from "../database"
-import {IProduct, Product} from "./Product"
+import Client from '../database'
+import { IProduct, Product } from './Product'
 
 export class ProductModel {
-
     async index(): Promise<IProduct[]> {
         try {
             const conn = await Client.connect()
@@ -11,14 +10,13 @@ export class ProductModel {
 
             const result = await conn.query(sql)
             conn.release()
-            return result.rows.map(it => {
+            return result.rows.map((it) => {
                 const p = new Product(it.name, it.price)
                 p.id = it.id
                 return p
             })
-
         } catch (err) {
-            throw new Error("Error getting products")
+            throw new Error('Error getting products')
         }
     }
 
@@ -41,11 +39,11 @@ export class ProductModel {
     //todo: add middleware
     async create(b: Product): Promise<IProduct> {
         try {
-            const sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *'
+            const sql =
+                'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *'
             const conn = await Client.connect()
 
-            const result = await conn
-                .query(sql, [b.name, b.price])
+            const result = await conn.query(sql, [b.name, b.price])
 
             const product = result.rows[0]
 
@@ -53,7 +51,9 @@ export class ProductModel {
             b.id = product.id
             return b
         } catch (err) {
-            throw new Error(`Could not add new product ${b.name}. Error: ${err}`)
+            throw new Error(
+                `Could not add new product ${b.name}. Error: ${err}`
+            )
         }
     }
 
@@ -74,5 +74,4 @@ export class ProductModel {
             throw new Error(`Could not delete product ${id}. Error: ${err}`)
         }
     }
-
 }

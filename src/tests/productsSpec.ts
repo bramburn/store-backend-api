@@ -1,12 +1,10 @@
-import {ProductModel} from "../models/ProductModel"
-import {generateProduct} from "./helpers/generator"
-import {Product} from "../models/Product"
-
+import { ProductModel } from '../models/ProductModel'
+import { generateProduct } from './helpers/generator'
+import { Product } from '../models/Product'
 
 const productModel = new ProductModel()
 
-describe("Testing the product model", () => {
-
+describe('Testing the product model', () => {
     it('should have index', function () {
         expect(productModel.index).toBeDefined()
     })
@@ -22,21 +20,16 @@ describe("Testing the product model", () => {
     it('should have create defined', function () {
         expect(productModel.create).toBeDefined()
     })
-
 })
 
-
 describe("Test the products model's creation", () => {
-
     // create a fake product
     const fakeProduct = generateProduct()
-
 
     it('should create a product', async function () {
         const ret = await productModel.create(fakeProduct)
         expect(ret).toBeInstanceOf(Product)
         expect(ret.name).toEqual(fakeProduct.name)
-
     })
 
     it('should show the current fake product', async function () {
@@ -56,8 +49,5 @@ describe("Test the products model's creation", () => {
         const ret = await productModel.index()
 
         expect(ret.length).toBe(0)
-
-
     })
-
 })

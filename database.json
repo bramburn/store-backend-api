@@ -2,15 +2,15 @@
   "dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "fantasy_worlds",
-    "user": "magical_user",
-    "password": "password123"
+    "database": "udacity_store",
+    "user": "udacity",
+    "password": "Sandal5-Yesterday-Dawdler"
   },
   "test": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "fantasy_worlds_test",
-    "user": "test_user",
-    "password": "password123"
+    "database": "udacity_store_test",
+    "user": "udacity",
+    "password": "Sandal5-Yesterday-Dawdler"
   }
 }
