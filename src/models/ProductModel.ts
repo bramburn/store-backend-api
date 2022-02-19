@@ -1,5 +1,5 @@
 import Client from '../database'
-import { IProduct, Product } from './Product'
+import {IProduct, Product} from './Product'
 
 export class ProductModel {
     async index(): Promise<IProduct[]> {
@@ -19,6 +19,19 @@ export class ProductModel {
             throw new Error('Error getting products')
         }
     }
+
+    async patch(p: Product): Promise<IProduct> {
+        try {
+            const sql = 'UPDATE products SET name=($1), price=($2) WHERE id=($3)'
+            const conn = await Client.connect()
+            const result = await conn.query(sql, [p.name, p.price, p.id])
+            conn.release()
+            return result.rows[0]
+        } catch (e) {
+            throw new Error(`Could not update product ${p.id}`)
+        }
+    }
+
 
     //todo add patch/put for the product
     async show(id: number): Promise<IProduct> {

@@ -20,14 +20,17 @@ export class OrderModel {
         }
     }
 
+    // patching only order status. no need to re-assign user, or other sub orders
     async patch(id: number, status: OrderStatus): Promise<QueryResult<any>> {
         try {
             const sql = 'UPDATE orders SET status=($1) WHERE id=($2)'
             const conn = await client.connect()
 
             // TODO: return a better output
-            return await conn.query(sql, [(status == OrderStatus.COMPLETE) ? 'COMPLETE' : 'ACTIVE', id
+            const return =  await conn.query(sql, [(status == OrderStatus.COMPLETE) ? 'COMPLETE' : 'ACTIVE', id
             ])
+
+            conn.release()
 
         } catch (e) {
             throw new Error(`There was an error updating order ${id}`)

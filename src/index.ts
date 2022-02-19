@@ -1,13 +1,14 @@
-import express, { Request, Response } from 'express'
+import express, {Request, Response} from 'express'
 import bodyParser from 'body-parser'
+import ProductRoutes from "./routes/ProductRoutes"
 
 const app = express()
 const port = 3000
 
 app.use(bodyParser.json())
-
+app.use('products', ProductRoutes)
 app.get('/', function (req: Request, res: Response) {
-    res.send('Hello World2!')
+    res.send('Hello World')
 })
 
 app.listen(port, function () {

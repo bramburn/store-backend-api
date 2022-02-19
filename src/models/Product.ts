@@ -36,8 +36,21 @@ export class Product implements IProduct {
 
     private _price!: number
 
-    constructor(name: string, price: number) {
+    constructor(name: string, price: number,id?:number) {
         this.price = price
         this.name = name
+        if(id){
+            this.id = id
+        }
+    }
+
+
+    toObject():object{
+        return {
+            id:this.id,
+            name:this.name,
+            price:this.price,
+            shownPrice:this.ShowPrice()
+        }
     }
 }
