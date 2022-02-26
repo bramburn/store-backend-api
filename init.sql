@@ -6036,6 +6036,7 @@ INSERT INTO orders (userId, status)
 VALUES (21, 'ACTIVE');
 INSERT INTO orders (userId, status)
 VALUES (802, 'ACTIVE');
+
 INSERT INTO order_product (qty, orderId, productId)
 VALUES (100, 379);
 INSERT INTO order_product (qty, orderId, productId)
