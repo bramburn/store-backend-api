@@ -1,6 +1,5 @@
-import { IOrder, Order, orderItem } from '../models/Order'
+import { IOrder, orderItem, OrderStatus } from '../models/Order'
 import {
-    generateOrder,
     generateOrderItem,
     generateProduct,
     generateUser,
@@ -62,8 +61,20 @@ describe('Testing the creation of Orders', async () => {
     it('should throw error when there is no number in show', async function () {
         try {
             const get = await orderModel.show(0)
-        } catch {
-            expect()
+        } catch (e) {
+            expect(e).toThrow()
         }
+    })
+
+    it('should update without issues', async function () {
+        const get = await orderModel.updateStatus(
+            createdOrder.id,
+            OrderStatus.COMPLETE
+        )
+        expect(get).toBe(true)
+    })
+
+    it('should delete the fake users and orders we created', async function () {
+        const get = await orderModel.delete(createdOrder.id)
     })
 })
