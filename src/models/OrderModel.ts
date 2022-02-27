@@ -86,6 +86,20 @@ export class OrderModel {
         }
     }
 
+    async updateStatus(orderId: number, status: OrderStatus): Promise<boolean> {
+        try {
+            const conn = await client.connect()
+            await conn.query('UPDATE order SET status=($1) WHERE id=($2)', [
+                status == OrderStatus.ACTIVE ? 'ACTIVE' : 'COMPLETE',
+                orderId,
+            ])
+            conn.release()
+            return true
+        } catch (err) {
+            throw new Error(`Could not update order ${orderId}. Error: ${err}`)
+        }
+    }
+
     //todo add middleware
     async create(listOfOrderItems: orderItem[], user: User): Promise<IOrder> {
         try {
@@ -125,9 +139,8 @@ export class OrderModel {
             const sql = 'DELETE FROM orders WHERE id=($1)'
             const conn = await client.connect()
 
-            const result = await conn.query(sql, [id])
-
-            const orders = result.rows[0]
+            await conn.query(sql, [id])
+            await conn.query('DELETE FROM order_product WHERE orderid=($1)'[id])
 
             conn.release()
 
