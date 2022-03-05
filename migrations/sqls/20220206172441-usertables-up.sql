@@ -8,3 +8,4 @@ create table IF NOT EXISTS users
     passwordHash varchar(256)
 
 );
+
