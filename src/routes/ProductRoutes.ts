@@ -9,6 +9,6 @@ app.get('/:id', (req: Request, res: Response) => {})
 
 app.post('/', (req: Request, res: Response) => {
     //create item
-    const p = new ProductModel()
-    p.create()
+    // const p = new ProductModel()
+    // p.create()
 })
