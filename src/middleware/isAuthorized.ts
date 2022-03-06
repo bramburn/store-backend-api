@@ -3,7 +3,7 @@ import { Response, NextFunction, Request } from 'express'
 export const isAuthorized = (
     req: Request,
     res: Response,
-    next: NextFunction
+next: NextFunction
 ): Response | void => {
     const { email } = res.locals
 
