@@ -1,11 +1,12 @@
-import { IUser, User } from './User'
+import {IUser, User} from './User'
 import client from '../database'
 
 export class UserModel {
     async index(): Promise<IUser[]> {
         try {
             const conn = await client.connect()
-            const sql = `SELECT * FROM users`
+            const sql = `SELECT *
+                         FROM users`
 
             const result = await conn.query(sql)
             conn.release()
@@ -30,18 +31,31 @@ export class UserModel {
         }
     }
 
+    async login(email: string, passwordHash: string) {
+        try {
+            const sql = 'SELECT * FROM users WHERE email=($1)'
+            const conn = await client.connect()
+
+            const result = await conn.query(sql, [email])
+            conn.release()
+            return result.rows[0]
+        } catch (err) {
+            throw new Error(`Could not find user ${email}. Error: ${err}`)
+        }
+    }
+
     //todo add middleware
-    async create(userClass: User, passwordHash: string): Promise<User> {
+    async create(userClass: User, passwordHash: string) {
         try {
             const sql =
-                'INSERT INTO users (firstName, LastName,email,passwordHash) VALUES($1, $2, $3,$4) RETURNING *'
+                'INSERT INTO users (firstName, LastName, email, passwordHash) VALUES($1, $2, $3, $4) RETURNING *'
             const conn = await client.connect()
             //todo add passwordHash and salt
 
             const result = await conn.query(sql, [
                 userClass.firstName,
                 userClass.lastName,
-                userClass.email,
+                userClass.email.toLowerCase(),
                 passwordHash,
             ])
 
@@ -51,9 +65,9 @@ export class UserModel {
             userClass.id = item.id
             return userClass
         } catch (err) {
-            throw new Error(
-                `Could not add new User ${userClass.showFullName()}. Error: ${err}`
-            )
+
+            throw `Could not add new User ${userClass.showFullName()}. Error: ${err}`
+
         }
     }
 

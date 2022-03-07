@@ -1,13 +1,16 @@
 import {Request, Response, Router} from "express"
 
 
-export const OrderRoutes  = Router()
+const OrderRoutes  = Router()
 
-OrderRoutes.get('/:uid', (res: Response, req: Request) => {
+OrderRoutes.get('/:uid', (req: Request, res: Response) => {
+
+})
+
+
+OrderRoutes.post('/:uid', (req: Request, res: Response) => {
 
 })
 
 
-OrderRoutes.post('/:uid', (res: Response, req: Request) => {
-
-})
+export default OrderRoutes
