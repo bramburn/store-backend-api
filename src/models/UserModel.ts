@@ -35,7 +35,7 @@ export class UserModel {
         }
     }
 
-    async login(email: string, passwordHash: string) {
+    async login(email: string, passwordHash: string):Promise<IUser> {
         try {
             const sql = 'SELECT * FROM users WHERE email=($1)'
             const conn = await client.connect()
@@ -49,7 +49,7 @@ export class UserModel {
     }
 
     //todo add middleware
-    async create(userClass: User, passwordHash: string) {
+    async create(userClass: User, passwordHash: string):Promise<IUser> {
         try {
             const sql =
                 'INSERT INTO users (firstName, LastName, email, passwordHash) VALUES($1, $2, $3, $4) RETURNING *'
