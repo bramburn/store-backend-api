@@ -8,7 +8,6 @@ const pk = (): Buffer => {
 }
 
 export const signThis = (email: string): string => {
-    // const pk = fs.readFileSync( Path.join(__dirname,'../../', 'keys', 'id_rsa.pub'))
 
     return jwt.sign(
         {

@@ -15,6 +15,7 @@ UserRoutes.get('/:id', (req: Request, res: Response) => {
 })
 
 
+// create user
 UserRoutes.post('/', async (req: Request, res: Response): Promise<void> => {
     console.log(req.body)
     const {firstName, lastName, email, password, password2} = req.body

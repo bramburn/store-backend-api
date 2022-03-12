@@ -15,16 +15,17 @@ SignRoutes.get('/', async (req: Request, res: Response): Promise<void> => {
     })
 })
 
-SignRoutes.post('/test', async (req: Request, res: Response) => {
+SignRoutes.post('/login', async (req: Request, res: Response): Promise<void> => {
     const {email, password} = req.body
     const u = new UserModel()
 
     const uf = new UserFactory()
     try {
         const p = await uf.hashPassword(password)
-        console.log(p)
         await u.login(email, p)
-        res.json({'done':'test'})
+        const signedKey = signThis(email)
+        //return the signed keys
+        res.json({'status': 'success', 'key': signedKey})
 
     } catch (arg) {
         console.log(arg)
