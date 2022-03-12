@@ -2,15 +2,23 @@ import {Request, Response, Router} from "express"
 import {User} from "../models/User"
 import {UserModel} from "../models/UserModel"
 import {UserFactory} from "../models/UserFactory"
+import {isAuthenticated} from "../middleware/isAuthenticated"
 
 
 const UserRoutes = Router()
 
-UserRoutes.get('/index', (req: Request, res: Response) => {
+UserRoutes.get('/index', isAuthenticated, async (req: Request, res: Response) => {
+    const userModel = new UserModel()
+    try {
+        const li = await userModel.index()
+        res.json(li)
+    } catch(message) {
+        res.json({'error':message})
+    }
 
 })
 
-UserRoutes.get('/:id', (req: Request, res: Response) => {
+UserRoutes.get('/:id', isAuthenticated, (req: Request, res: Response) => {
     const {id} = req.params
 })
 

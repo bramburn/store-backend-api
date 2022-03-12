@@ -2,7 +2,7 @@ import {IUser, User} from './User'
 import client from '../database'
 
 export class UserModel {
-    async index(): Promise<IUser[]> {
+    async index(): Promise<object> {
         try {
             const conn = await client.connect()
             const sql = `SELECT *
@@ -10,9 +10,13 @@ export class UserModel {
 
             const result = await conn.query(sql)
             conn.release()
-            return result.rows
+            const returnLi = result.rows.map(it => {
+                const u = new User(it.firstname, it.lastname, it.email,it.id)
+                return u.toObject()
+            })
+            return returnLi
         } catch (err) {
-            throw new Error('Error getting users')
+            throw `Error getting users ${err}`
         }
     }
 

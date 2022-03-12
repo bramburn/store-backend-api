@@ -22,5 +22,6 @@ export const signThis = (email: string): string => {
 }
 
 export const decodeThis = (token: string): string | JwtPayload => {
+
     return jwt.verify(token, pk())
 }

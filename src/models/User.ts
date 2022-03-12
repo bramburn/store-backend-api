@@ -8,9 +8,7 @@ export interface IUser {
 export class User implements IUser {
     public id = 0
     public email: string
-
     public lastName: string
-
     public firstName: string
 
     showFullName(): string {
@@ -18,11 +16,14 @@ export class User implements IUser {
     }
 
     //password not needed to create user model
-    constructor(firstName: string, lastName: string, email: string) {
+    constructor(firstName: string, lastName: string, email: string,id=0) {
         this.firstName = firstName
         this.lastName = lastName
         this.email = email
+        this.id = id
     }
+
+
 
     toObject(): object {
         return {
@@ -33,4 +34,5 @@ export class User implements IUser {
             email: this.email,
         }
     }
+
 }
