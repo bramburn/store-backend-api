@@ -49,7 +49,7 @@ export class UserModel {
     }
 
     //todo add middleware
-    async create(userClass: User, passwordHash: string):Promise<IUser> {
+    async create(userClass: IUser, passwordHash: string):Promise<User|IUser> {
         try {
             const sql =
                 'INSERT INTO users (firstName, LastName, email, passwordHash) VALUES($1, $2, $3, $4) RETURNING *'
@@ -70,7 +70,7 @@ export class UserModel {
             return userClass
         } catch (err) {
 
-            throw `Could not add new User ${userClass.showFullName()}. Error: ${err}`
+            throw `Could not add new User ${userClass.firstName}. Error: ${err}`
 
         }
     }

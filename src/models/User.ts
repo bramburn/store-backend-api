@@ -3,6 +3,8 @@ export interface IUser {
     firstName: string
     lastName: string
     email: string
+    showFullName():string
+    toObject():object
 }
 
 export class User implements IUser {

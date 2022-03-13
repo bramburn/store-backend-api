@@ -1,6 +1,6 @@
 import { UserModel } from '../models/UserModel'
 import { generateUser } from './helpers/generator'
-import { UserFactory } from '../models/UserFactory'
+import { UserHelper } from '../models/UserHelper'
 import { User } from '../models/User'
 
 const userModel = new UserModel()
@@ -27,7 +27,7 @@ describe('Testing the actual model for users', () => {
     const fakeUser = generateUser()
     let generatedUser: null | User
     it('Should create user', async () => {
-        const uf = new UserFactory()
+        const uf = new UserHelper()
         const pass = await uf.hashPassword('randompassword010128')
 
         generatedUser = await userModel.create(fakeUser, pass)

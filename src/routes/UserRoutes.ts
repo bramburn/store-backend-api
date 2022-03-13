@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express"
 import {User} from "../models/User"
 import {UserModel} from "../models/UserModel"
-import {UserFactory} from "../models/UserFactory"
+import {UserHelper} from "../models/UserHelper"
 import {isAuthenticated} from "../middleware/isAuthenticated"
 
 
@@ -34,7 +34,7 @@ UserRoutes.post('/', async (req: Request, res: Response): Promise<void> => {
         })
     }
 
-    const u = new UserFactory()
+    const u = new UserHelper()
     const newuser = await u.createUser(firstName, lastName, email, password)
     res.json(newuser)
 

@@ -1,7 +1,7 @@
 import {Response, Request, Router} from 'express'
 import {decodeThis, signThis} from '../util/sign'
 import {UserModel} from "../models/UserModel"
-import {UserFactory} from "../models/UserFactory"
+import {UserHelper} from "../models/UserHelper"
 
 const SignRoutes = Router()
 
@@ -19,7 +19,7 @@ SignRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
     const {email, password} = req.body
     const u = new UserModel()
 
-    const uf = new UserFactory()
+    const uf = new UserHelper()
     try {
         const p = await uf.hashPassword(password)
         await u.login(email, p)
