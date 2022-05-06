@@ -1,10 +1,14 @@
-import {Product} from "../models/Product"
-import {ProductModel} from "../models/ProductModel"
-import {generateOrderItem, generateProduct, generateUser} from "./helpers/generator"
-import {UserModel} from "../models/UserModel"
-import {IOrder, orderItem, OrderStatus} from "../models/Order"
-import {OrderModel} from "../models/OrderModel"
-import exp from "constants"
+import { Product } from '../models/Product'
+import { ProductModel } from '../models/ProductModel'
+import {
+    generateOrderItem,
+    generateProduct,
+    generateUser,
+} from './helpers/generator'
+import { UserModel } from '../models/UserModel'
+import { IOrder, orderItem, OrderStatus } from '../models/Order'
+import { OrderModel } from '../models/OrderModel'
+import exp from 'constants'
 
 const orderModel = new OrderModel()
 describe('Testing the creation of Orders', async () => {
@@ -31,7 +35,10 @@ describe('Testing the creation of Orders', async () => {
         }
     })
     it('should update the file when editing it', async function () {
-        const get = await orderModel.patch(createdOrder.id, OrderStatus.COMPLETE)
+        const get = await orderModel.patch(
+            createdOrder.id,
+            OrderStatus.COMPLETE
+        )
         expect(get.rows[0].id).toEqual(createdOrder.id)
         expect(get.rows[0].status).toEqual('COMPLETE')
     })

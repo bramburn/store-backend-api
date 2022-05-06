@@ -1,6 +1,6 @@
-import {generateProduct} from "./helpers/generator"
-import {IProduct, Product} from "../models/Product"
-import {ProductModel} from "../models/ProductModel"
+import { generateProduct } from './helpers/generator'
+import { IProduct, Product } from '../models/Product'
+import { ProductModel } from '../models/ProductModel'
 
 const productModel = new ProductModel()
 describe("Test the products model's creation", () => {
@@ -21,7 +21,7 @@ describe("Test the products model's creation", () => {
     })
     it('should throw error when updating', async function () {
         try {
-            const co: Product = new Product("New name", 20202)
+            const co: Product = new Product('New name', 20202)
             // no id provided
             const ret = await productModel.patch(co)
         } catch (e) {
@@ -30,12 +30,11 @@ describe("Test the products model's creation", () => {
         }
     })
 
-
     it('should Update the product ', async function () {
-        const newItem = new Product("New Item", 9.99)
+        const newItem = new Product('New Item', 9.99)
         newItem.id = generated.id
         const ret = await productModel.patch(newItem)
-        expect(ret.name).toEqual("New Item")
+        expect(ret.name).toEqual('New Item')
         expect(ret.price).toEqual(9.99)
     })
 

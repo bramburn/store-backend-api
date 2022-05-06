@@ -1,8 +1,8 @@
 import client from '../database'
-import {User} from './User'
-import {IOrder, Order, orderItem, OrderStatus} from './Order'
-import {Product} from './Product'
-import {QueryResult} from "pg"
+import { User } from './User'
+import { IOrder, Order, orderItem, OrderStatus } from './Order'
+import { Product } from './Product'
+import { QueryResult } from 'pg'
 
 export class OrderModel {
     async index(): Promise<IOrder[]> {
@@ -27,11 +27,12 @@ export class OrderModel {
             const conn = await client.connect()
 
             // TODO: return a better output
-            const return =  await conn.query(sql, [(status == OrderStatus.COMPLETE) ? 'COMPLETE' : 'ACTIVE', id
+            const result = await conn.query(sql, [
+                status == OrderStatus.COMPLETE ? 'COMPLETE' : 'ACTIVE',
+                id,
             ])
 
             conn.release()
-
         } catch (e) {
             throw new Error(`There was an error updating order ${id}`)
         }

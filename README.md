@@ -6,9 +6,9 @@ This repo contains a basic Node and Express app to get you started in constructi
 
 ## Required Technologies
 Your application must make use of the following libraries:
-- Postgres for the database
+- Postgres for the database ✔
 - Node/Express for the application logic
-- dotenv from npm for managing environment variables
+- dotenv from npm for managing environment variables ✔
 - db-migrate from npm for migrations
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
